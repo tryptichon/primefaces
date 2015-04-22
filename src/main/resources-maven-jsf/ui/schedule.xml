@@ -183,8 +183,26 @@
 			<name>columnFormat</name>
 			<required>false</required>
 			<type>java.lang.String</type>
-            <description>Format for column headers.</description>
+            <description>Format for column headers. DEPRECATED: Please use dayFormat, weekFormat and monthFormat for headers of the separate views instead.</description>
 		</attribute>
+        <attribute>
+            <name>dayFormat</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <description>Set column headers for the view 'day'.</description>
+        </attribute>
+        <attribute>
+            <name>weekFormat</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <description>Set column headers for the view 'week'.</description>
+        </attribute>
+        <attribute>
+            <name>monthFormat</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <description>Set column headers for the view 'month'.</description>
+        </attribute>
         <attribute>
             <name>timeZone</name>
             <required>false</required>
@@ -212,13 +230,13 @@
             <description>Displays description of events on a tooltip, default value is false.</description>
         </attribute>
         <attribute>
-           <name>viewFormat</name>
-           <required>false</required>
-           <type>java.lang.String</type>
-           <description>Complete view format configuration as JSON Object, see http://fullcalendar.io/docs/views/View-Specific-Options/ 
- WARNING!! The JSON object text given here must be parseable with jQuery.parseJSON(). Remember to enclose all property names in double quotes!</description>
+            <name>showWeekNumbers</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+            <defaultValue>false</defaultValue>
+            <description>Display week numbers in schedule.</description>
         </attribute>
-	</attributes>
+        </attributes>
 	<resources>
         <resource>
 			<name>schedule/schedule.css</name>
