@@ -9805,6 +9805,7 @@ PrimeFaces.widget.Schedule = PrimeFaces.widget.DeferredWidget.extend({
         this.cfg.theme = true;
         this.jqc = $(this.jqId + '_container');
         this.viewNameState = $(this.jqId + '_view');
+        this.cfg.urlTarget = this.cfg.urlTarget || "_blank";
         
         var monthFormat = this.cfg.monthFormat;
         var weekFormat = this.cfg.weekFormat;
@@ -9905,7 +9906,12 @@ PrimeFaces.widget.Schedule = PrimeFaces.widget.DeferredWidget.extend({
             }
         };
 
-        this.cfg.select = function(startDate, endDate, jsEvent, view) {
+        this.cfg.eventClick = function(calEvent, jsEvent, view) {
+            if (calEvent.url) {
+                window.open(calEvent.url, $this.cfg.urlTarget);
+                return false;
+            }
+
             if($this.cfg.behaviors) {
                 var rangeSelectBehavior = $this.cfg.behaviors['rangeSelect'];
                 if(rangeSelectBehavior) {
