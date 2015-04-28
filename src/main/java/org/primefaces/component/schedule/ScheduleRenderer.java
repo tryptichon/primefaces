@@ -192,7 +192,8 @@ public class ScheduleRenderer extends CoreRenderer {
             .attr("axisFormat", schedule.getAxisFormat(), null)
             .attr("timeFormat", schedule.getTimeFormat(), null)
             .attr("weekNumbers", schedule.isShowWeekNumbers(), false)
-            .attr("selectable", schedule.isRangeSelect(), false);
+            .attr("selectable", schedule.isRangeSelect(), false)
+            .attr("urlTarget", schedule.getUrlTarget(), "_blank");
                 
         String columnFormat = schedule.getColumnFormat();
         if(columnFormat != null) {
