@@ -200,6 +200,11 @@ public class ScheduleRenderer extends CoreRenderer {
             logger.warning("columnFormat is deprecated, use dayFormat, weekFormat and monthFormat.");
             wb.attr("columnFormat", columnFormat, null);
         }
+            
+        String extender = schedule.getExtender();
+        if(extender != null) {
+            wb.attr("extender", extender, null);
+        }
 
         String dayFormat = schedule.getDayFormat();
         if(dayFormat != null) {
@@ -213,7 +218,6 @@ public class ScheduleRenderer extends CoreRenderer {
         if(monthFormat != null) {
             wb.attr("monthFormat", monthFormat, null);
         }
-
         
         encodeClientBehaviors(context, schedule);
 
