@@ -254,7 +254,7 @@
             <name>extender</name>
             <required>false</required>
             <type>java.lang.String</type>
-            <description>Name of a javascript function to extend the options of the schedule.</description>
+            <description>Name of javascript function to extend the options of the underlying fullcalendar plugin.</description>
         </attribute>
         </attributes>
 	<resources>

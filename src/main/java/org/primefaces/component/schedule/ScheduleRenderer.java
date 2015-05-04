@@ -203,7 +203,7 @@ public class ScheduleRenderer extends CoreRenderer {
             
         String extender = schedule.getExtender();
         if(extender != null) {
-            wb.attr("extender", extender, null);
+            wb.nativeAttr("extender", extender, null);
         }
 
         String dayFormat = schedule.getDayFormat();
