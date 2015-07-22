@@ -9901,7 +9901,8 @@ PrimeFaces.widget.Schedule = PrimeFaces.widget.DeferredWidget.extend({
                 if(dateSelectBehavior) {
                     var ext = {
                         params: [
-							{name: $this.id + '_selectedDate', value: dayDate.valueOf() - dayDate.zone()*60000 - $this.cfg.offset}
+                            {name: $this.id + '_selectedDate', value: dayDate.valueOf() - dayDate.zone()*60000 - $this.cfg.offset},
+                            {name: $this.id + '_keys', value: (jsEvent.altKey ? "Alt" : "") + (jsEvent.shiftKey ? "Shift" : "") + (jsEvent.metaKey ? "Meta" : "")}
                         ]
                     };
 
@@ -9917,7 +9918,8 @@ PrimeFaces.widget.Schedule = PrimeFaces.widget.DeferredWidget.extend({
                     var ext = {
                         params: [
                             {name: $this.id + '_startDate', value: startDate.valueOf() - startDate.zone()*60000 - $this.cfg.offset},
-                            {name: $this.id + '_endDate', value: endDate.valueOf() - endDate.zone()*60000 - $this.cfg.offset}
+                            {name: $this.id + '_endDate', value: endDate.valueOf() - endDate.zone()*60000 - $this.cfg.offset},
+                            {name: $this.id + '_keys', value: (jsEvent.altKey ? "Alt" : "") + (jsEvent.shiftKey ? "Shift" : "") + (jsEvent.metaKey ? "Meta" : "")}
                         ]
                     };
 
@@ -9937,8 +9939,8 @@ PrimeFaces.widget.Schedule = PrimeFaces.widget.DeferredWidget.extend({
                 if(eventSelectBehavior) {
                     var ext = {
                         params: [
-                            {name: $this.id + '_selectedEventId', value: calEvent.id}
-                        ]
+                            {name: $this.id + '_selectedEventId', value: calEvent.id},
+                            {name: $this.id + '_keys', value: (jsEvent.altKey ? "Alt" : "") + (jsEvent.shiftKey ? "Shift" : "") + (jsEvent.metaKey ? "Meta" : "")}                        ]
                     };
 
                     eventSelectBehavior.call($this, ext);
@@ -9954,7 +9956,8 @@ PrimeFaces.widget.Schedule = PrimeFaces.widget.DeferredWidget.extend({
                         params: [
                             {name: $this.id + '_movedEventId', value: calEvent.id},
                             {name: $this.id + '_dayDelta', value: delta.days()},
-                            {name: $this.id + '_minuteDelta', value: (delta._milliseconds/60000)}
+                            {name: $this.id + '_minuteDelta', value: (delta._milliseconds/60000)},
+                            {name: $this.id + '_keys', value: (jsEvent.altKey ? "Alt" : "") + (jsEvent.shiftKey ? "Shift" : "") + (jsEvent.metaKey ? "Meta" : "")}                            
                         ]
                     };
                     
@@ -9971,12 +9974,22 @@ PrimeFaces.widget.Schedule = PrimeFaces.widget.DeferredWidget.extend({
                         params: [
                             {name: $this.id + '_resizedEventId', value: calEvent.id},
                             {name: $this.id + '_dayDelta', value: delta.days()},
-                            {name: $this.id + '_minuteDelta', value: (delta._milliseconds/60000)}
+                            {name: $this.id + '_minuteDelta', value: (delta._milliseconds/60000)},
+                            {name: $this.id + '_keys', value: (jsEvent.altKey ? "Alt" : "") + (jsEvent.shiftKey ? "Shift" : "") + (jsEvent.metaKey ? "Meta" : "")}                            
                         ]
                     };
 
                     eventResizeBehavior.call($this, ext);
                 }
+            }
+        };
+        
+        this.cfg.eventDragStart = function(calEvent, jsEvent, ui, view) {
+            if (jsEvent.shiftKey) {
+                var dragClone = $.extend(true, {}, calEvent);
+                dragClone.id = "";
+                dragClone._id = "";
+                $this.jqc.fullCalendar('renderEvent', dragClone);
             }
         };
         

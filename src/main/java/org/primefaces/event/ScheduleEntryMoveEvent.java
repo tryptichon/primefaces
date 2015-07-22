@@ -23,7 +23,7 @@ import javax.faces.event.FacesListener;
 
 import org.primefaces.model.ScheduleEvent;
 
-public class ScheduleEntryMoveEvent extends AjaxBehaviorEvent {
+public class ScheduleEntryMoveEvent extends MetaKeyEvent {
 
 	private ScheduleEvent scheduleEvent;
 	
@@ -31,14 +31,21 @@ public class ScheduleEntryMoveEvent extends AjaxBehaviorEvent {
 	
 	private int minuteDelta;
 
-	public ScheduleEntryMoveEvent(UIComponent component, Behavior behavior, ScheduleEvent scheduleEvent, int dayDelta, int minuteDelta) {
-		super(component, behavior);
+	public ScheduleEntryMoveEvent(UIComponent component, Behavior behavior, ScheduleEvent scheduleEvent, int dayDelta, int minuteDelta, String keys) {
+		super(component, behavior, keys);
 		this.scheduleEvent = scheduleEvent;
 		this.dayDelta = dayDelta;
 		this.minuteDelta = minuteDelta;
 	}
 
-	@Override
+	public ScheduleEntryMoveEvent(UIComponent component, Behavior behavior, ScheduleEvent scheduleEvent, int dayDelta, int minuteDelta) {
+		super(component, behavior, "");
+		this.scheduleEvent = scheduleEvent;
+		this.dayDelta = dayDelta;
+		this.minuteDelta = minuteDelta;
+	}
+
+        @Override
 	public boolean isAppropriateListener(FacesListener faceslistener) {
 		return (faceslistener instanceof AjaxBehaviorListener);
 	}

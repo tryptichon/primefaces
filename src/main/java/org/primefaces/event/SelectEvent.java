@@ -21,16 +21,21 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.AjaxBehaviorListener;
 import javax.faces.event.FacesListener;
 
-public class SelectEvent extends AjaxBehaviorEvent {
+public class SelectEvent extends MetaKeyEvent {
 
 	private Object object;
 	
-	public SelectEvent(UIComponent component, Behavior behavior, Object object) {
-		super(component, behavior);
+	public SelectEvent(UIComponent component, Behavior behavior, Object object, String keys) {
+		super(component, behavior, keys);
 		this.object = object;
 	}
 
-	@Override
+	public SelectEvent(UIComponent component, Behavior behavior, Object object) {
+		super(component, behavior, "");
+		this.object = object;
+	}
+
+        @Override
 	public boolean isAppropriateListener(FacesListener faceslistener) {
 		return (faceslistener instanceof AjaxBehaviorListener);
 	}

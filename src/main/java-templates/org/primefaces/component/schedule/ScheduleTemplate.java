@@ -81,9 +81,11 @@ import org.primefaces.model.ScheduleEvent;
             AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
             FacesEvent wrapperEvent = null;
 
+            String keys = params.get(clientId + "_keys");
+
             if(eventName.equals("dateSelect")) {
                 Date selectedDate = UTCMillisToTimezoneDate(tz, Long.valueOf(params.get(clientId + "_selectedDate")));
-                SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), selectedDate);
+                SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), selectedDate, keys);
                 selectEvent.setPhaseId(behaviorEvent.getPhaseId());
 
                 wrapperEvent = selectEvent;
@@ -91,7 +93,7 @@ import org.primefaces.model.ScheduleEvent;
             else if(eventName.equals("rangeSelect")) {
                 Date startDate = UTCMillisToTimezoneDate(tz, Long.valueOf(params.get(clientId + "_startDate")));
                 Date endDate = UTCMillisToTimezoneDate(tz, Long.valueOf(params.get(clientId + "_endDate")));
-                SelectRangeEvent selectRangeEvent = new SelectRangeEvent(this, behaviorEvent.getBehavior(), startDate, endDate);
+                SelectRangeEvent selectRangeEvent = new SelectRangeEvent(this, behaviorEvent.getBehavior(), startDate, endDate, keys);
                 selectRangeEvent.setPhaseId(behaviorEvent.getPhaseId());
 
                 wrapperEvent = selectRangeEvent;
@@ -100,7 +102,7 @@ import org.primefaces.model.ScheduleEvent;
                 String selectedEventId = params.get(clientId + "_selectedEventId");
 				ScheduleEvent selectedEvent = this.getValue().getEvent(selectedEventId);
 
-                wrapperEvent = new SelectEvent(this, behaviorEvent.getBehavior(), selectedEvent);
+                wrapperEvent = new SelectEvent(this, behaviorEvent.getBehavior(), selectedEvent, keys);
             }
             else if(eventName.equals("eventMove")) {
                 String movedEventId = params.get(clientId + "_movedEventId");
@@ -122,7 +124,7 @@ import org.primefaces.model.ScheduleEvent;
                 calendar.add(Calendar.MINUTE, minuteDelta);
 				movedEvent.getEndDate().setTime(calendar.getTimeInMillis());
 
-                wrapperEvent = new ScheduleEntryMoveEvent(this, behaviorEvent.getBehavior(), movedEvent, dayDelta, minuteDelta);
+                wrapperEvent = new ScheduleEntryMoveEvent(this, behaviorEvent.getBehavior(), movedEvent, dayDelta, minuteDelta, keys);
             }
             else if(eventName.equals("eventResize")) {
                 String resizedEventId = params.get(clientId + "_resizedEventId");
@@ -137,10 +139,10 @@ import org.primefaces.model.ScheduleEvent;
                 calendar.add(Calendar.MINUTE, minuteDelta);
 				resizedEvent.getEndDate().setTime(calendar.getTimeInMillis());
 
-                wrapperEvent = new ScheduleEntryResizeEvent(this, behaviorEvent.getBehavior(), resizedEvent, dayDelta, minuteDelta);
+                wrapperEvent = new ScheduleEntryResizeEvent(this, behaviorEvent.getBehavior(), resizedEvent, dayDelta, minuteDelta, keys);
             }
             else if(eventName.equals("viewChange")) {
-				wrapperEvent = new SelectEvent(this, behaviorEvent.getBehavior(), this.getView());
+				wrapperEvent = new SelectEvent(this, behaviorEvent.getBehavior(), this.getView(), keys);
             }
 
             wrapperEvent.setPhaseId(behaviorEvent.getPhaseId());

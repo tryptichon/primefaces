@@ -21,13 +21,19 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.AjaxBehaviorListener;
 import javax.faces.event.FacesListener;
 
-public class SelectRangeEvent extends AjaxBehaviorEvent {
+public class SelectRangeEvent extends MetaKeyEvent {
 
 	private Object start;
 	private Object end;
 	
-	public SelectRangeEvent(UIComponent component, Behavior behavior, Object start, Object end) {
-		super(component, behavior);
+	public SelectRangeEvent(UIComponent component, Behavior behavior, Object start, Object end, String keys) {
+		super(component, behavior, keys);
+		this.start = start;
+                this.end = end;
+	}
+
+        public SelectRangeEvent(UIComponent component, Behavior behavior, Object start, Object end) {
+		super(component, behavior, "");
 		this.start = start;
                 this.end = end;
 	}
