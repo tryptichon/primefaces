@@ -9985,21 +9985,16 @@ PrimeFaces.widget.Schedule = PrimeFaces.widget.DeferredWidget.extend({
         };
         
         this.cfg.showClone = function (ev) {
-            if (ev.shiftKey && (! $this.cfg.shiftLock)) {
+            if (ev.shiftKey) {
                 ev.data.view.showEvent(ev.data.event);
-                $this.cfg.shiftLock = true;
             }
         }
 
         this.cfg.hideClone = function (ev) {
-            if ($this.cfg.shiftLock) {
-                ev.data.view.hideEvent(ev.data.event);
-                $this.cfg.shiftLock = false;
-            }
+            ev.data.view.hideEvent(ev.data.event);
         }
             
         this.cfg.eventDragStart = function(calEvent, jsEvent, ui, view) {
-            $this.cfg.shiftLock = false;
             $(document).on("keydown", { view: view, event: calEvent }, $this.cfg.showClone);
             $(document).on("keyup", { view: view, event: calEvent }, $this.cfg.hideClone);
         };
