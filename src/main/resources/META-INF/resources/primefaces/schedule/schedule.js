@@ -9984,15 +9984,31 @@ PrimeFaces.widget.Schedule = PrimeFaces.widget.DeferredWidget.extend({
             }
         };
         
-        this.cfg.eventDragStart = function(calEvent, jsEvent, ui, view) {
-            if (jsEvent.shiftKey) {
-                var dragClone = $.extend(true, {}, calEvent);
-                dragClone.id = "";
-                dragClone._id = "";
-                $this.jqc.fullCalendar('renderEvent', dragClone);
+        this.cfg.showClone = function (ev) {
+            if (ev.shiftKey && (! $this.cfg.shiftLock)) {
+                ev.data.view.showEvent(ev.data.event);
+                $this.cfg.shiftLock = true;
             }
+        }
+
+        this.cfg.hideClone = function (ev) {
+            if ($this.cfg.shiftLock) {
+                ev.data.view.hideEvent(ev.data.event);
+                $this.cfg.shiftLock = false;
+            }
+        }
+            
+        this.cfg.eventDragStart = function(calEvent, jsEvent, ui, view) {
+            $this.cfg.shiftLock = false;
+            $(document).on("keydown", { view: view, event: calEvent }, $this.cfg.showClone);
+            $(document).on("keyup", { view: view, event: calEvent }, $this.cfg.hideClone);
         };
         
+        this.cfg.eventDragStop = function(calEvent, jsEvent, ui, view) {
+            $(document).off("keydown", $this.cfg.showClone);
+            $(document).off("keyup", $this.cfg.hideClone);
+        };
+
         if(this.cfg.tooltip) {
             this.cfg.eventMouseover = function(event, jsEvent, view) {
                 if(event.description) {
