@@ -9988,11 +9988,11 @@ PrimeFaces.widget.Schedule = PrimeFaces.widget.DeferredWidget.extend({
             if (ev.shiftKey) {
                 ev.data.view.showEvent(ev.data.event);
             }
-        }
+        };
 
         this.cfg.hideClone = function (ev) {
             ev.data.view.hideEvent(ev.data.event);
-        }
+        };
             
         this.cfg.eventDragStart = function(calEvent, jsEvent, ui, view) {
             $(document).on("keydown", { view: view, event: calEvent }, $this.cfg.showClone);
